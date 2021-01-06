@@ -11,6 +11,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using SampleDAL.DataAccess;
+using SampleDAL.Repositories;
 
 namespace SampleAPI
 {
@@ -26,6 +29,15 @@ namespace SampleAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            
+
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("SampleContext")));
+
+            services.AddScoped<IPersonRepository, PersonRepository>();
+
+            services.AddControllers();
+
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy",
@@ -35,7 +47,7 @@ namespace SampleAPI
                         .WithMethods("GET", "POST", "DELETE");
                     });
             });
-            services.AddControllers();
+            
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "SampleAPI", Version = "v1" });

@@ -1,0 +1,15 @@
+C:\workspace\Sample\DotNetAPI\SampleApp\SampleDA\bin\Debug\net5.0\SampleDAL.deps.json
+C:\workspace\Sample\DotNetAPI\SampleApp\SampleDA\bin\Debug\net5.0\SampleDAL.dll
+C:\workspace\Sample\DotNetAPI\SampleApp\SampleDA\bin\Debug\net5.0\ref\SampleDAL.dll
+C:\workspace\Sample\DotNetAPI\SampleApp\SampleDA\bin\Debug\net5.0\SampleDAL.pdb
+C:\workspace\Sample\DotNetAPI\SampleApp\SampleDA\obj\Debug\net5.0\SampleDAL.csprojAssemblyReference.cache
+C:\workspace\Sample\DotNetAPI\SampleApp\SampleDA\obj\Debug\net5.0\SampleDAL.GeneratedMSBuildEditorConfig.editorconfig
+C:\workspace\Sample\DotNetAPI\SampleApp\SampleDA\obj\Debug\net5.0\SampleDAL.AssemblyInfoInputs.cache
+C:\workspace\Sample\DotNetAPI\SampleApp\SampleDA\obj\Debug\net5.0\SampleDAL.AssemblyInfo.cs
+C:\workspace\Sample\DotNetAPI\SampleApp\SampleDA\obj\Debug\net5.0\SampleDAL.csproj.CoreCompileInputs.cache
+C:\workspace\Sample\DotNetAPI\SampleApp\SampleDA\obj\Debug\net5.0\SampleDAL.dll
+C:\workspace\Sample\DotNetAPI\SampleApp\SampleDA\obj\Debug\net5.0\ref\SampleDAL.dll
+C:\workspace\Sample\DotNetAPI\SampleApp\SampleDA\obj\Debug\net5.0\SampleDAL.pdb
+C:\workspace\Sample\DotNetAPI\SampleApp\SampleDA\bin\Debug\net5.0\SampleModel.dll
+C:\workspace\Sample\DotNetAPI\SampleApp\SampleDA\bin\Debug\net5.0\SampleModel.pdb
+C:\workspace\Sample\DotNetAPI\SampleApp\SampleDA\obj\Debug\net5.0\SampleDAL.csproj.CopyComplete

@@ -1187,7 +1187,6 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "http://packages.platton.com/": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
