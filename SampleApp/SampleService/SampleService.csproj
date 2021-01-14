@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>.net5</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SampleDA\SampleDAL.csproj" />
+    <ProjectReference Include="..\SampleModel\SampleModel.csproj" />
+  </ItemGroup>
+
+</Project>

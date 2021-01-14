@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SampleDAL.Repositories;
+using SampleDAL.Repositories.Interfaces;
 using SampleModel;
 using SampleModel.DTO;
 using SampleModel.Entities;
@@ -25,6 +27,7 @@ namespace SampleAPI.Controllers
 
         // GET: api/<PersonController>
         [HttpGet]
+        [Authorize]
         public IEnumerable<PersonDTO> Get()
         {
             return repository.GetPersons().Select(p => p.asDto());
@@ -32,6 +35,7 @@ namespace SampleAPI.Controllers
 
         // GET api/<PersonController>/5
         [HttpGet("{id}")]
+        [Authorize]
         public ActionResult<PersonDTO> Get(int id)
         {
             var person = repository.GetPerson(id);
@@ -44,6 +48,7 @@ namespace SampleAPI.Controllers
 
         // POST api/<ValuesController>
         [HttpPost]
+        [Authorize]
         public ActionResult<PersonDTO> Post(CreatePersonDTO PersonDTO)
         {
             Person person = new()
@@ -60,6 +65,7 @@ namespace SampleAPI.Controllers
 
         // PUT api/<ValuesController>/5
         [HttpPut("{id}")]
+        [Authorize]
         public ActionResult Put(int id, UpdatePersonDTO PersonDTO)
         {
             var existingPerson = repository.GetPerson(id);
@@ -79,6 +85,7 @@ namespace SampleAPI.Controllers
 
         // DELETE api/<ValuesController>/5
         [HttpDelete("{id}")]
+        [Authorize]
         public ActionResult Delete(int id)
         {
             var existingPerson = repository.GetPerson(id);

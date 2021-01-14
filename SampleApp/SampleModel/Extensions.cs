@@ -1,5 +1,6 @@
 ﻿using SampleModel.DTO;
 using SampleModel.Entities;
+using SampleModel.Enum;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,16 @@ namespace SampleModel
                 FirstName = person.FirstName,
                 LastName = person.LastName,
                 Age = person.Age,
+            };
+        }
+
+        public static UserResponseDTO asDto(this User user)
+        {
+            return new UserResponseDTO
+            {
+                Id = user.Id,
+                Login = user.Login,
+                Role = user.Role,
             };
         }
     }

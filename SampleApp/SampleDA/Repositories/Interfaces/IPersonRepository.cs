@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SampleDAL.Repositories
+namespace SampleDAL.Repositories.Interfaces
 {
     public interface IPersonRepository
     {

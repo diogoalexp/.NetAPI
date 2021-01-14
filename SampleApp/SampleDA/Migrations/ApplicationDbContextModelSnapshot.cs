@@ -19,7 +19,7 @@ namespace SampleDAL.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.1");
 
-            modelBuilder.Entity("SampleDAL.Models.Address", b =>
+            modelBuilder.Entity("SampleModel.Entities.Address", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -31,7 +31,7 @@ namespace SampleDAL.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<int?>("Personid")
+                    b.Property<int?>("PersonId")
                         .HasColumnType("int");
 
                     b.Property<string>("State")
@@ -51,14 +51,14 @@ namespace SampleDAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Personid");
+                    b.HasIndex("PersonId");
 
                     b.ToTable("Addresses");
                 });
 
-            modelBuilder.Entity("SampleDAL.Models.Email", b =>
+            modelBuilder.Entity("SampleModel.Entities.Email", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .UseIdentityColumn();
@@ -68,19 +68,19 @@ namespace SampleDAL.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<int?>("Personid")
+                    b.Property<int?>("PersonId")
                         .HasColumnType("int");
 
-                    b.HasKey("id");
+                    b.HasKey("Id");
 
-                    b.HasIndex("Personid");
+                    b.HasIndex("PersonId");
 
                     b.ToTable("EmailAddesses");
                 });
 
-            modelBuilder.Entity("SampleDAL.Models.Person", b =>
+            modelBuilder.Entity("SampleModel.Entities.Person", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .UseIdentityColumn();
@@ -98,26 +98,47 @@ namespace SampleDAL.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.HasKey("id");
+                    b.HasKey("Id");
 
                     b.ToTable("Person");
                 });
 
-            modelBuilder.Entity("SampleDAL.Models.Address", b =>
+            modelBuilder.Entity("SampleModel.Entities.User", b =>
                 {
-                    b.HasOne("SampleDAL.Models.Person", null)
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("Login")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Role")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("User");
+                });
+
+            modelBuilder.Entity("SampleModel.Entities.Address", b =>
+                {
+                    b.HasOne("SampleModel.Entities.Person", null)
                         .WithMany("Addresses")
-                        .HasForeignKey("Personid");
+                        .HasForeignKey("PersonId");
                 });
 
-            modelBuilder.Entity("SampleDAL.Models.Email", b =>
+            modelBuilder.Entity("SampleModel.Entities.Email", b =>
                 {
-                    b.HasOne("SampleDAL.Models.Person", null)
+                    b.HasOne("SampleModel.Entities.Person", null)
                         .WithMany("EmailAddresses")
-                        .HasForeignKey("Personid");
+                        .HasForeignKey("PersonId");
                 });
 
-            modelBuilder.Entity("SampleDAL.Models.Person", b =>
+            modelBuilder.Entity("SampleModel.Entities.Person", b =>
                 {
                     b.Navigation("Addresses");
 

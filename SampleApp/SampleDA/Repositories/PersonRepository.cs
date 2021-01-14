@@ -1,4 +1,5 @@
 ﻿using SampleDAL.DataAccess;
+using SampleDAL.Repositories.Interfaces;
 using SampleModel.Entities;
 using System;
 using System.Collections.Generic;
