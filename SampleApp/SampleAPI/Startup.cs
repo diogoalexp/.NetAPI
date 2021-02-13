@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using SampleDAL.Repositories.Interfaces;
+using SampleService;
 
 namespace SampleAPI
 {
@@ -36,9 +37,9 @@ namespace SampleAPI
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("SampleContext")));
 
-            services.AddSingleton<IConfiguration>(Configuration);
-            services.AddScoped<IPersonRepository, PersonRepository>();
-            services.AddScoped<IUserRepository, UserRepository>();
+            //services.AddSingleton<IConfiguration>(Configuration);
+            //services.AddScoped<IPersonRepository, PersonRepository>();
+            //services.AddScoped<IUserRepository, UserRepository>();
 
             services.AddControllers();
 
@@ -75,6 +76,8 @@ namespace SampleAPI
                         ValidateAudience = false
                     };
                 });
+
+            DependencyInjection.Register(services, Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

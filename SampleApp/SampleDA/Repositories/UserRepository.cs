@@ -9,24 +9,11 @@ using System.Threading.Tasks;
 
 namespace SampleDAL.Repositories
 {
-    public class UserRepository : IUserRepository
+    public class UserRepository : BaseRepository<User>, IUserRepository
     {
-        private readonly ApplicationDbContext _db;
 
-        public UserRepository(ApplicationDbContext db)
+        public UserRepository(ApplicationDbContext db) : base(db)
         {
-            this._db = db;
-        }
-
-        public User Get(User user)
-        {            
-            return _db.User.Where(item => item.Login == user.Login).FirstOrDefault();
-        }
-
-        public void Create(User user)
-        {
-            _db.User.Add(user);
-            _db.SaveChanges();
         }
     }
 }

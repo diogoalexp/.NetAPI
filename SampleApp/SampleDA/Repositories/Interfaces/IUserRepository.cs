@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace SampleDAL.Repositories.Interfaces
 {
-    public interface IUserRepository
+    public interface IUserRepository : IBaseRepository<User>
     {
-        User Get(User user);
-        void Create(User user);
+
     }
 }

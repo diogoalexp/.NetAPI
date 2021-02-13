@@ -7,13 +7,11 @@ C:\workspace\Sample\DotNetAPI\SampleApp\SampleAPI\bin\Debug\net5.0\SampleAPI.run
 C:\workspace\Sample\DotNetAPI\SampleApp\SampleAPI\bin\Debug\net5.0\SampleAPI.dll
 C:\workspace\Sample\DotNetAPI\SampleApp\SampleAPI\bin\Debug\net5.0\ref\SampleAPI.dll
 C:\workspace\Sample\DotNetAPI\SampleApp\SampleAPI\bin\Debug\net5.0\SampleAPI.pdb
-C:\workspace\Sample\DotNetAPI\SampleApp\SampleAPI\bin\Debug\net5.0\Humanizer.dll
 C:\workspace\Sample\DotNetAPI\SampleApp\SampleAPI\bin\Debug\net5.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 C:\workspace\Sample\DotNetAPI\SampleApp\SampleAPI\bin\Debug\net5.0\Microsoft.AspNetCore.Authentication.OpenIdConnect.dll
 C:\workspace\Sample\DotNetAPI\SampleApp\SampleAPI\bin\Debug\net5.0\Microsoft.Data.SqlClient.dll
 C:\workspace\Sample\DotNetAPI\SampleApp\SampleAPI\bin\Debug\net5.0\Microsoft.EntityFrameworkCore.dll
 C:\workspace\Sample\DotNetAPI\SampleApp\SampleAPI\bin\Debug\net5.0\Microsoft.EntityFrameworkCore.Abstractions.dll
-C:\workspace\Sample\DotNetAPI\SampleApp\SampleAPI\bin\Debug\net5.0\Microsoft.EntityFrameworkCore.Design.dll
 C:\workspace\Sample\DotNetAPI\SampleApp\SampleAPI\bin\Debug\net5.0\Microsoft.EntityFrameworkCore.Relational.dll
 C:\workspace\Sample\DotNetAPI\SampleApp\SampleAPI\bin\Debug\net5.0\Microsoft.EntityFrameworkCore.SqlServer.dll
 C:\workspace\Sample\DotNetAPI\SampleApp\SampleAPI\bin\Debug\net5.0\Microsoft.Extensions.DependencyInjection.dll

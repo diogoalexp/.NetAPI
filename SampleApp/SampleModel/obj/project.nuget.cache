@@ -1,8 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "2aBaTzXSqO9tOm7TO9ffmQo36s5eK/QKvAOqVGfTKrhC35AcOTuXs2mxxg2TMgRCZBlTm/zKc+Pxr0S708b0ww==",
+  "dgSpecHash": "gZnstVUj250n3bi8VNBMgm6lnp0DAYN2ma1hVwIxj4Kp+WXsrxeO3zA2bQxs7d4AXW+A/0O6hSmrU5pksXdb9g==",
   "success": true,
   "projectFilePath": "C:\\workspace\\Sample\\DotNetAPI\\SampleApp\\SampleModel\\SampleModel.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\diogo.pereira\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\5.0.0\\microsoft.extensions.logging.abstractions.5.0.0.nupkg.sha512",
+    "C:\\Users\\diogo.pereira\\.nuget\\packages\\newtonsoft.json\\12.0.2\\newtonsoft.json.12.0.2.nupkg.sha512"
+  ],
   "logs": []
 }

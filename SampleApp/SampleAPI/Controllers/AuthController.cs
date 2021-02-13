@@ -1,12 +1,15 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using SampleDAL.Repositories;
 using SampleDAL.Repositories.Interfaces;
 using SampleModel;
 using SampleModel.DTO;
 using SampleModel.Entities;
 using SampleService;
+using SampleService.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,63 +24,42 @@ namespace SampleAPI.Controllers
     public class AuthController : ControllerBase
     {
 
-        private readonly IUserRepository repository;
-        private readonly IConfiguration config;
+        private readonly IUserRepository userRepository;
+        private readonly IUserService userService;
+        private readonly ILogger<AuthController> _logger;
 
-        public AuthController(IUserRepository repository, IConfiguration config)
+        public AuthController(IUserRepository repository, IConfiguration config, IUserService userService, ILogger<AuthController> logger)
         {
-            this.repository = repository;
-            this.config = config;
+            this.userService = userService;
+            _logger = logger;
         }
 
         [HttpPost]
         [Route("login")]
-        public ActionResult<dynamic> Authenticate([FromBody] UserDTO model)
+        public async Task<ActionResult<dynamic>> Authenticate([FromBody] AuthRequest model)
         {
-            User userParam = new()
+            try
             {
-                Login = model.Login,
-                Pass = model.Password
-            };
-
-            // Recupera o usuário
-            var user = repository.Get(userParam);
-
-            // Verifica se o usuário existe
-            if (user == null)
-                return NotFound(new { message = "Usuário inválido" });
-
-            if (user.Password != userParam.Password)
-                return NotFound(new { message = "Senha inválida" });
-
-            // Gera o Token
-            var token = TokenService.GenerateToken(user, config["Secret"]);
-
-            // Retorna os dados
-            return new
+                return Ok(await userService.Authenticate(model));
+            }
+            catch (Exception ex)
             {
-                user = new UserResponseDTO() {Login = user.Login, Role = user.Role, Id = user.Id },
-                token = token
-            };
+                return BadRequest(_logger.ToLogError(ex, model));
+            }
         }
 
         [HttpPost]
         [Route("register")]
-        public ActionResult<UserResponseDTO> Register([FromBody] UserDTO model)
+        public async Task<ActionResult<RegisterResponse>> Register([FromBody] AuthRequest model)
         {
-            User user = new()
+            try
             {
-                Login = model.Login,
-                Pass = model.Password,
-                Role = SampleModel.Enum.Roles.Normal,
-            };
-
-            if (repository.Get(user) is not null)
-                return NotFound(new { message = "Usuário já existe" });
-
-            repository.Create(user);
-
-            return Ok(user.asDto());
+                return Ok(await userService.Register(model));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(_logger.ToLogError(ex, model));
+            }
         }
 
         [HttpGet]
