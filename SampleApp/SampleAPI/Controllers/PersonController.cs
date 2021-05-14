@@ -1,16 +1,13 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using SampleDAL.Repositories;
-using SampleDAL.Repositories.Interfaces;
-using SampleModel;
+using Microsoft.Extensions.Logging;
 using SampleModel.DTO;
 using SampleModel.Entities;
+using SampleModel.Helper;
+using SampleService.Services.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace SampleAPI.Controllers
 {
@@ -18,83 +15,109 @@ namespace SampleAPI.Controllers
     [ApiController]
     public class PersonController : ControllerBase
     {
-        private readonly IPersonRepository repository;
+        private readonly IPersonService personService;
+        private readonly ILogger<PersonController> _logger;
 
-        public PersonController(IPersonRepository repository)
+        public PersonController(IPersonService personService, ILogger<PersonController> logger)
         {
-            this.repository = repository;
+            this.personService = personService;
+            _logger = logger;
         }
 
-        // GET: api/<PersonController>
         [HttpGet]
-        [Authorize]
-        public IEnumerable<PersonDTO> Get()
+        //[Authorize]
+        public async Task<ActionResult<IEnumerable<PersonDTO>>> Get()
         {
-            return repository.GetPersons().Select(p => p.asDto());
-        }
-
-        // GET api/<PersonController>/5
-        [HttpGet("{id}")]
-        [Authorize]
-        public ActionResult<PersonDTO> Get(int id)
-        {
-            var person = repository.GetPerson(id);
-
-            if (person is null)
-                return NotFound();
-
-            return Ok(person.asDto());
-        }
-
-        // POST api/<ValuesController>
-        [HttpPost]
-        [Authorize]
-        public ActionResult<PersonDTO> Post(CreatePersonDTO PersonDTO)
-        {
-            Person person = new()
+            try
             {
-                //id = Guid.NewGuid(),
-                FirstName = PersonDTO.FirstName,
-                LastName = PersonDTO.LastName,
-                Age = PersonDTO.Age,
-            };
-            repository.CreatePerson(person);
-
-            return CreatedAtAction(nameof(Get), new { Id = person.Id }, person.asDto());
+                return Ok(await personService.GetAsync());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(_logger.ToLogError(ex));
+            }
         }
 
-        // PUT api/<ValuesController>/5
+        [HttpGet("{id}")]
+        //[Authorize]
+        public async Task<ActionResult<PersonDTO>> Get(int id)
+        {
+            try
+            {
+                var person = await personService.GetFirstAsync(new Person() { Id = id });
+
+                if (person is null)
+                    return NotFound();
+
+                return Ok(person.asDto());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(_logger.ToLogError(ex));
+            }
+        }
+
+        [HttpPost]
+        //[Authorize]
+        public async Task<ActionResult<PersonDTO>> Post(CreatePersonDTO personDTO)
+        {
+            try
+            {
+                Person person = await personService.InsertAsync(personDTO.asDomain());
+
+                if (person is null)
+                    return BadRequest();
+
+                return CreatedAtAction(nameof(Get), new { Id = person.Id }, person.asDto());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(_logger.ToLogError(ex));
+            }
+        }
+
         [HttpPut("{id}")]
-        [Authorize]
-        public ActionResult Put(int id, UpdatePersonDTO PersonDTO)
+        //[Authorize]
+        public async Task<ActionResult<PersonDTO>> Put(int id, UpdatePersonDTO personDTO)
         {
-            var existingPerson = repository.GetPerson(id);
-            if (existingPerson is null)
-                return NotFound();
+            try
+            {
+                var person = await personService.GetFirstAsync(new Person() { Id = id });
+                if (person is null)
+                    return NotFound();
 
+                person.FirstName = personDTO.FirstName;
+                person.LastName = personDTO.LastName;
+                person.Age = personDTO.Age;
 
-            existingPerson.FirstName = PersonDTO.FirstName;
-            existingPerson.LastName = PersonDTO.LastName;
-            existingPerson.Age = PersonDTO.Age;
+                person = await personService.UpdateAsync(person);
 
-            repository.UpdatePerson(existingPerson);
-
-            return NoContent();
-
+                return CreatedAtAction(nameof(Get), new { Id = person.Id }, person.asDto());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(_logger.ToLogError(ex));
+            }
         }
 
-        // DELETE api/<ValuesController>/5
         [HttpDelete("{id}")]
-        [Authorize]
-        public ActionResult Delete(int id)
+        //[Authorize]
+        public async Task<ActionResult<PersonDTO>> Delete(int id)
         {
-            var existingPerson = repository.GetPerson(id);
-            if (existingPerson is null)
-                return NotFound();
+            try
+            {
+                var person = await personService.GetFirstAsync(new Person() { Id = id });
+                if (person is null)
+                    return NotFound();
 
-            repository.DeletePerson(existingPerson.Id);
+                await personService.DeleteAsync(person);
 
-            return NoContent();
+                return Ok(person);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(_logger.ToLogError(ex));
+            }
         }
     }
 }

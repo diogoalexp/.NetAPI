@@ -5,10 +5,8 @@ using System.Text;
 
 namespace SampleModel.Entities
 {
-    public class Email
+    public class Email : BaseEntity
     {
-        public int Id { get; set; }
-
         [Required]
         [MaxLength(200)]
         public string EmailAddress { get; set; }

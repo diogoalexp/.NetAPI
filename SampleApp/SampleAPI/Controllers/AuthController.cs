@@ -2,20 +2,11 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
-using SampleDAL.Repositories;
-using SampleDAL.Repositories.Interfaces;
-using SampleModel;
 using SampleModel.DTO;
-using SampleModel.Entities;
-using SampleService;
-using SampleService.Interfaces;
+using SampleModel.Helper;
+using SampleService.Services.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace SampleAPI.Controllers
 {
@@ -23,24 +14,22 @@ namespace SampleAPI.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-
-        private readonly IUserRepository userRepository;
         private readonly IUserService userService;
         private readonly ILogger<AuthController> _logger;
 
-        public AuthController(IUserRepository repository, IConfiguration config, IUserService userService, ILogger<AuthController> logger)
+        public AuthController(IConfiguration config, IUserService userService, ILogger<AuthController> logger)
         {
             this.userService = userService;
             _logger = logger;
         }
 
         [HttpPost]
-        [Route("login")]
-        public async Task<ActionResult<dynamic>> Authenticate([FromBody] AuthRequest model)
+        [Route("signIn")]
+        public async Task<ActionResult<dynamic>> SignIn([FromBody] AuthRequestDTO model)
         {
             try
             {
-                return Ok(await userService.Authenticate(model));
+                return Ok(await userService.SignIn(model));
             }
             catch (Exception ex)
             {
@@ -49,12 +38,12 @@ namespace SampleAPI.Controllers
         }
 
         [HttpPost]
-        [Route("register")]
-        public async Task<ActionResult<RegisterResponse>> Register([FromBody] AuthRequest model)
+        [Route("signUp")]
+        public async Task<ActionResult<RegisterResponseDTO>> SignUp([FromBody] AuthRequestDTO model)
         {
             try
             {
-                return Ok(await userService.Register(model));
+                return Ok(await userService.SignUp(model));
             }
             catch (Exception ex)
             {
@@ -70,18 +59,16 @@ namespace SampleAPI.Controllers
         [HttpGet]
         [Route("authenticated")]
         [Authorize]
-        public string Authenticated() => String.Format("Autenticado - {0}", User.Identity.Name);
+        public string Authenticated() => String.Format("Authenticated - {0}", User.Identity.Name);
 
         [HttpGet]
         [Route("employee")]
         [Authorize(Roles = "Normal,Admin")]
-        public string Employee() => "Funcionário";
+        public string Employee() => "Employee";
 
         [HttpGet]
         [Route("manager")]
         [Authorize(Roles = "Admin")]
-        public string Manager() => "Gerente";
-
-        
+        public string Manager() => "Manager";
     }
 }

@@ -21,7 +21,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SampleDA\SampleDAL.csproj" />
     <ProjectReference Include="..\SampleService\SampleService.csproj" />
   </ItemGroup>
 

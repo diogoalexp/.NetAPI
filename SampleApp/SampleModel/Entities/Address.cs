@@ -6,10 +6,8 @@ using System.Text;
 
 namespace SampleModel.Entities
 {
-    public class Address
+    public class Address : BaseEntity
     {
-        public int Id { get; set; }
-
         [Required]
         [MaxLength(200)]
         public string StreetAddress { get; set; }
