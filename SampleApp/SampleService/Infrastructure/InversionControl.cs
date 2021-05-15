@@ -17,7 +17,7 @@ namespace SampleService
             return new Dictionary<Type, Type>
             {
                 { typeof(IBaseService<>), typeof(BaseService<>) },
-                { typeof(IUserService), typeof(UserService) },
+                { typeof(IAuthService), typeof(AuthService) },
                 { typeof(IPersonService), typeof(PersonService) },
             };
         }
@@ -27,7 +27,7 @@ namespace SampleService
             return new Dictionary<Type, Type>
             {
                 { typeof(IBaseRepository<>), typeof(BaseRepository<>) },                
-                { typeof(IUserRepository), typeof(UserRepository) },
+                { typeof(IAuthRepository), typeof(AuthRepository) },
                 { typeof(IPersonRepository), typeof(PersonRepository) },
             };
         }

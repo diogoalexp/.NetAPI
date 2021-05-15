@@ -10,7 +10,7 @@ namespace SampleService
 {
     public static class TokenService
     {
-        public static string GenerateToken(User user, string secret)
+        public static string GenerateToken(Auth user, string secret)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(secret);

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace SampleModel.Entities
 {
-    public class User : BaseEntity
+    public class Auth : BaseEntity
     {
         public string Login { get; set; }
         public string Password { get; set; }

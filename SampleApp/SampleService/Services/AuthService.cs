@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using AutoMapper;
+using Microsoft.Extensions.Configuration;
 using SampleDAL.Repositories.Interfaces;
 using SampleModel.DTO;
 using SampleModel.Entities;
@@ -10,19 +11,20 @@ using System.Threading.Tasks;
 
 namespace SampleService.Services
 {
-    public class UserService : BaseService<User>, IUserService
+    public class AuthService : BaseService<Auth>, IAuthService
     {
-        private readonly IUserRepository _userRepository;
         private readonly IConfiguration _config;
+        private readonly IMapper _mapper;
 
-        public UserService
+        public AuthService
         (
-            IUserRepository userRepository,
-            IConfiguration config
+            IAuthRepository userRepository,
+            IConfiguration config, 
+            IMapper mapper
         ) : base(userRepository)
         {
-            _userRepository = userRepository;
             _config = config;
+            _mapper = mapper;
         }
 
         public async Task<AuthResponseDTO> SignIn(AuthRequestDTO model)
@@ -30,7 +32,7 @@ namespace SampleService.Services
             if (string.IsNullOrWhiteSpace(model.Login))
                 throw new Exception("Login Incorrect.");
 
-            var user = (await _userRepository.GetAsync(model.asDomain(), x => x.Login == model.Login)).FirstOrDefault();
+            var user = (await GetAsync(_mapper.Map<Auth>(model), x => x.Login == model.Login)).FirstOrDefault();
 
             if (user == null)
                 throw new Exception("Invalid user.");
@@ -38,21 +40,23 @@ namespace SampleService.Services
             if (user.Pass != model.Password)
                 throw new Exception("Invalid password.");
 
-            var token = TokenService.GenerateToken(user, _config["Secret"]);
+            var authResponse = _mapper.Map<AuthResponseDTO>(user);
 
-            return user.asAuthResponse(token);
+            authResponse.Token = TokenService.GenerateToken(user, _config["Secret"]);
+
+            return authResponse;
         }
 
         public async Task<RegisterResponseDTO> SignUp(AuthRequestDTO model)
         {
-            var user = (await _userRepository.GetAsync(model.asDomain(), x => x.Login == model.Login)).FirstOrDefault();
+            var user = (await GetAsync(_mapper.Map<Auth>(model), x => x.Login == model.Login)).FirstOrDefault();
 
             if (user is not null)
                 throw new Exception("User already exists");
 
-            user = await _userRepository.InsertAsync(model.asDomain());
+            user = await InsertAsync(_mapper.Map<Auth>(model));
 
-            return user.asRegisterResponse();
+            return _mapper.Map<RegisterResponseDTO>(user);
         }
 
     }

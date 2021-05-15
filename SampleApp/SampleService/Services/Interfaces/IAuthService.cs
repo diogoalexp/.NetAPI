@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace SampleService.Services.Interfaces
 {
-    public interface IUserService : IBaseService<User>
+    public interface IAuthService : IBaseService<Auth>
     {
         Task<AuthResponseDTO> SignIn(AuthRequestDTO model);
         Task<RegisterResponseDTO> SignUp(AuthRequestDTO model);

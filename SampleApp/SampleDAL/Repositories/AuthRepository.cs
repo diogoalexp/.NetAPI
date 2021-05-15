@@ -5,10 +5,10 @@ using SampleModel.Entities;
 
 namespace SampleDAL.Repositories
 {
-    public class UserRepository : BaseRepository<User>, IUserRepository
+    public class AuthRepository : BaseRepository<Auth>, IAuthRepository
     {
 
-        public UserRepository(ApplicationDbContext db) : base(db)
+        public AuthRepository(ApplicationDbContext db) : base(db)
         {
         }
     }

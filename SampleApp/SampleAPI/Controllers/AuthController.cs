@@ -14,10 +14,10 @@ namespace SampleAPI.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly IUserService userService;
+        private readonly IAuthService userService;
         private readonly ILogger<AuthController> _logger;
 
-        public AuthController(IConfiguration config, IUserService userService, ILogger<AuthController> logger)
+        public AuthController(IConfiguration config, IAuthService userService, ILogger<AuthController> logger)
         {
             this.userService = userService;
             _logger = logger;

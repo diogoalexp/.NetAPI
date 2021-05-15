@@ -8,17 +8,12 @@ namespace SampleService.Services
 {
     public class PersonService : BaseService<Person>, IPersonService
     {
-        private readonly IPersonRepository _personRepository;
-        private readonly IConfiguration _config;
-
         public PersonService
         (
             IPersonRepository personRepository,
             IConfiguration config
         ) : base(personRepository)
         {
-            _personRepository = personRepository;
-            _config = config;
         }
     }
 }

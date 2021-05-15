@@ -3,7 +3,7 @@ using SampleModel.Entities;
 
 namespace SampleDAL.Repositories.Interfaces
 {
-    public interface IUserRepository : IBaseRepository<User>
+    public interface IAuthRepository : IBaseRepository<Auth>
     {
 
     }

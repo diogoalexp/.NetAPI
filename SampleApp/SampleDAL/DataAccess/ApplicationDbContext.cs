@@ -16,9 +16,7 @@ namespace SampleDAL.DataAccess
             }
 
         public DbSet<Person> Person { get; set; }
-        public DbSet<Address> Addresses { get; set; }
-        public DbSet<Email> EmailAddesses { get; set; }
-        public DbSet<User> User { get; set; }
+        public DbSet<Auth> User { get; set; }
 
     }
 }
