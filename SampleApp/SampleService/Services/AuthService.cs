@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.Extensions.Configuration;
 using SampleDAL.Repositories.Interfaces;
+using SampleModel.Constants;
 using SampleModel.DTO;
 using SampleModel.Entities;
 using SampleService.Services.Base;
@@ -30,15 +31,15 @@ namespace SampleService.Services
         public async Task<AuthResponseDTO> SignIn(AuthRequestDTO model)
         {
             if (string.IsNullOrWhiteSpace(model.Login))
-                throw new Exception("Login Incorrect.");
+                throw new Exception(Constants.Error.INVALID_LOGIN);
 
             var user = (await GetAsync(_mapper.Map<Auth>(model), x => x.Login == model.Login)).FirstOrDefault();
 
             if (user == null)
-                throw new Exception("Invalid user.");
+                throw new Exception(Constants.Error.INVALID_USER);
 
             if (user.Pass != model.Password)
-                throw new Exception("Invalid password.");
+                throw new Exception(Constants.Error.INVALID_PASSWORD);
 
             var authResponse = _mapper.Map<AuthResponseDTO>(user);
 
@@ -52,7 +53,7 @@ namespace SampleService.Services
             var user = (await GetAsync(_mapper.Map<Auth>(model), x => x.Login == model.Login)).FirstOrDefault();
 
             if (user is not null)
-                throw new Exception("User already exists");
+                throw new Exception(Constants.Error.INVALID_USER_EXISTS);
 
             user = await InsertAsync(_mapper.Map<Auth>(model));
 

@@ -36,7 +36,7 @@ namespace SampleModel.Helper
 
         public static string ToLogError(this ILogger logger, Exception exception, Object parametro = null)
         {
-            logger.LogError(exception, "Dados informados foram: {Parametros}", JsonConvert.SerializeObject(parametro));
+            logger.LogError(exception, "Data model: {Params}", JsonConvert.SerializeObject(parametro));
 
             return exception.GetaAllMessages();
         }

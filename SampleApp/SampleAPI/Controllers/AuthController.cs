@@ -17,7 +17,7 @@ namespace SampleAPI.Controllers
         private readonly IAuthService userService;
         private readonly ILogger<AuthController> _logger;
 
-        public AuthController(IConfiguration config, IAuthService userService, ILogger<AuthController> logger)
+        public AuthController(IAuthService userService, ILogger<AuthController> logger)
         {
             this.userService = userService;
             _logger = logger;
@@ -25,7 +25,7 @@ namespace SampleAPI.Controllers
 
         [HttpPost]
         [Route("signIn")]
-        public async Task<ActionResult<dynamic>> SignIn([FromBody] AuthRequestDTO model)
+        public async Task<ActionResult<AuthResponseDTO>> SignIn([FromBody] AuthRequestDTO model)
         {
             try
             {
@@ -54,21 +54,21 @@ namespace SampleAPI.Controllers
         [HttpGet]
         [Route("anonymous")]
         [AllowAnonymous]
-        public string Anonymous() => "Anônimo";
+        public ActionResult<string> Anonymous() => Ok("Anonymous");
 
         [HttpGet]
         [Route("authenticated")]
         [Authorize]
-        public string Authenticated() => String.Format("Authenticated - {0}", User.Identity.Name);
+        public ActionResult<string> Authenticated() => Ok(String.Format("Authenticated - {0}", User.Identity.Name));
 
         [HttpGet]
         [Route("employee")]
         [Authorize(Roles = "Normal,Admin")]
-        public string Employee() => "Employee";
+        public ActionResult<string> Employee() => Ok("Employee");
 
         [HttpGet]
         [Route("manager")]
         [Authorize(Roles = "Admin")]
-        public string Manager() => "Manager";
+        public ActionResult<string> Manager() => Ok("Manager");
     }
 }

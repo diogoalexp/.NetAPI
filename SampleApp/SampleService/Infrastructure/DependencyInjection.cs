@@ -41,17 +41,7 @@ namespace SampleService
 
         private static void RegisterDomainMapper(IServiceCollection services)
         {
-            var config = new AutoMapper.MapperConfiguration(cfg =>
-            {
-                //Input
-                cfg.CreateMap<AuthRequestDTO, Auth>();
-                cfg.CreateMap<CreatePersonDTO, Person>();
-                cfg.CreateMap<UpdatePersonDTO, Person>();
-
-                //Output
-                cfg.CreateMap<Auth, AuthResponseDTO>();
-                cfg.CreateMap<Auth, RegisterResponseDTO>();
-            });
+            var config = MapperControl.GetMapperConfiguration();
             IMapper mapper = config.CreateMapper();
             services.AddSingleton(mapper);
         }

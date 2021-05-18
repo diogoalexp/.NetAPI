@@ -8,6 +8,7 @@ using SampleModel.Helper;
 using SampleService.Services.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace SampleAPI.Controllers
@@ -33,7 +34,9 @@ namespace SampleAPI.Controllers
         {
             try
             {
-                return Ok(await personService.GetAsync());
+                IEnumerable<Person> result = await personService.GetAsync();
+
+                return Ok(_mapper.Map<IEnumerable<PersonDTO>>(result));
             }
             catch (Exception ex)
             {
@@ -52,7 +55,7 @@ namespace SampleAPI.Controllers
                 if (person is null)
                     return NotFound();
 
-                return Ok(person);
+                return Ok(_mapper.Map<PersonDTO>(person));
             }
             catch (Exception ex)
             {
@@ -71,7 +74,7 @@ namespace SampleAPI.Controllers
                 if (person is null)
                     return BadRequest();
 
-                return CreatedAtAction(nameof(Get), new { Id = person.Id }, person);
+                return CreatedAtAction(nameof(Get), new { Id = person.Id }, _mapper.Map<PersonDTO>(person));
             }
             catch (Exception ex)
             {
@@ -94,7 +97,7 @@ namespace SampleAPI.Controllers
 
                 person = await personService.UpdateAsync(person);
 
-                return CreatedAtAction(nameof(Get), new { Id = person.Id }, person);
+                return AcceptedAtAction(nameof(Get), new { Id = person.Id }, _mapper.Map<PersonDTO>(person));
             }
             catch (Exception ex)
             {
@@ -112,9 +115,9 @@ namespace SampleAPI.Controllers
                 if (person is null)
                     return NotFound();
 
-                await personService.DeleteAsync(person);
+                person = await personService.DeleteAsync(person);
 
-                return Ok(person);
+                return AcceptedAtAction(nameof(Get), new { Id = person.Id }, _mapper.Map<PersonDTO>(person));
             }
             catch (Exception ex)
             {
