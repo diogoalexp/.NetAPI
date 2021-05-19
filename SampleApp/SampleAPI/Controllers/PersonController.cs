@@ -92,8 +92,9 @@ namespace SampleAPI.Controllers
                 if (person is null)
                     return NotFound();
 
-                person = _mapper.Map<Person>(model);
-                person.Id = id;
+                person.FirstName = model.FirstName;
+                person.LastName = model.LastName;
+                person.Age = model.Age;
 
                 person = await personService.UpdateAsync(person);
 

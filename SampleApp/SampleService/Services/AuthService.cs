@@ -38,7 +38,7 @@ namespace SampleService.Services
             if (user == null)
                 throw new Exception(Constants.Error.INVALID_USER);
 
-            if (user.Pass != model.Password)
+            if (user.Password != model.Password)
                 throw new Exception(Constants.Error.INVALID_PASSWORD);
 
             var authResponse = _mapper.Map<AuthResponseDTO>(user);
